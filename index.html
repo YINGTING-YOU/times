@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Times - Découvrir la gastronomie, partager les délices</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #FF6B35;
+            --secondary: #F7931E;
+            --accent: #FFA400;
+            --light: #FFF9F0;
+            --dark: #2D2D2D;
+            --gray: #6C757D;
+            --success: #28A745;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 导航栏样式 */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo i {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        /* 横幅样式 - 修改版 */
+        .banner {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .banner-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .banner-text {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .banner h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            line-height: 1.2;
+        }
+
+        .banner p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .banner-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-large {
+            padding: 14px 30px;
+            font-size: 1.1rem;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--dark);
+        }
+
+        /* 注册表单入口样式 */
+        .signup-entry {
+            flex: 0 0 400px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            color: var(--dark);
+        }
+
+        .signup-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .signup-header h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .signup-header p {
+            color: var(--gray);
+            font-size: 1rem;
+        }
+
+        .signup-features {
+            margin: 25px 0;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .feature-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        .signup-cta {
+            text-align: center;
+        }
+
+        .typeform-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 14px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        .typeform-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .search-box {
+            display: flex;
+            max-width: 600px;
+            margin-top: 30px;
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .search-box button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-box button:hover {
+            background: var(--secondary);
+        }
+
+        /* 选项卡样式 */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .tab {
+            padding: 15px 30px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .tab.active {
+            color: var(--primary);
+        }
+
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .tab:hover {
+            color: var(--primary);
+        }
+
+        /* 卡片网格样式 */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--dark);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-category {
+            display: inline-block;
+            background: var(--light);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .card-description {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .user-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .rating {
+            color: var(--accent);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .banner-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .banner-text {
+                max-width: 100%;
+            }
+            
+            .signup-entry {
+                flex: 0 0 auto;
+                width: 100%;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            
+            .banner h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links {
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .banner h1 {
+                font-size: 2.3rem;
+            }
+            
+            .banner p {
+                font-size: 1rem;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+            }
+            
+            .banner-actions {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .banner {
+                padding: 60px 0;
+            }
+            
+            .banner h1 {
+                font-size: 2rem;
+            }
+            
+            .search-box {
+                flex-direction: column;
+                border-radius: 8px;
+            }
+            
+            .search-box input {
+                border-radius: 8px 8px 0 0;
+            }
+            
+            .search-box button {
+                padding: 12px;
+                border-radius: 0 0 8px 8px;
+            }
+            
+            .tab {
+                padding: 10px 15px;
+            }
+            
+            .card-img {
+                height: 180px;
+            }
+            
+            .signup-entry {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>Times</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#">Accueil</a>
+                    <a href="#">Découvrir</a>
+                    <a href="#">Guides</a>
+                    <a href="#">Restaurants</a>
+                    <a href="#">À propos</a>
+                </div>
+                <div class="nav-actions">
+                    <button class="btn btn-outline">Connexion</button>
+                    <button class="btn btn-primary">Inscription</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 横幅 - 修改版，包含注册入口 -->
+    <section class="banner">
+        <div class="container">
+            <div class="banner-content">
+                <div class="banner-text">
+                    <h1>Découvrir la gastronomie, partager les délices</h1>
+                    <p>Explorez la gastronomie mondiale, enregistrez chaque expérience gustative mémorable et partagez vos histoires culinaires avec les amateurs de gastronomie</p>
+                    <div class="banner-actions">
+                        <button class="btn btn-primary btn-large">Explorer maintenant</button>
+                        <button class="btn btn-secondary btn-large">En savoir plus</button>
+                    </div>
+                    <div class="search-box">
+                        <input type="text" placeholder="Rechercher des plats, restaurants ou lieux...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                
+                <!-- 注册表单入口 -->
+                <div class="signup-entry">
+                    <div class="signup-header">
+                        <h2>Rejoignez notre communauté</h2>
+                        <p>Inscrivez-vous en 2 minutes seulement</p>
+                    </div>
+                    
+                    <div class="signup-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span>Accédez à des milliers de guides gastronomiques</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span>Partagez vos propres expériences culinaires</span>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span>Recevez des recommandations personnalisées</span>
+                        </div>
+                    </div>
+                    
+                    <div class="signup-cta">
+                        <a href="https://form.typeform.com/to/rENHB2dI" target="_blank" class="typeform-btn">
+                            <i class="fas fa-user-plus"></i>
+                            S'inscrire maintenant
+                        </a>
+                        <p style="margin-top: 15px; font-size: 0.9rem; color: var(--gray);">
+                            Déjà membre? <a href="#" style="color: var(--primary);">Connectez-vous</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 选项卡 -->
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active">Recommandé</div>
+            <div class="tab">Populaire</div>
+            <div class="tab">Nouveautés</div>
+            <div class="tab">À proximité</div>
+            <div class="tab">Favoris</div>
+        </div>
+    </div>
+
+    <!-- 卡片网格 -->
+    <div class="container">
+        <div class="section-title">
+            <h2>Guides gastronomiques populaires</h2>
+        </div>
+        <div class="cards-grid">
+            <!-- 卡片1 -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cuisine française" class="card-img">
+                <div class="card-content">
+                    <span class="card-category">Cuisine française</span>
+                    <h3 class="card-title">Guide complet de la pâtisserie parisienne</h3>
+                    <p class="card-description">Découvrez les secrets des meilleures pâtisseries de Paris, des croissants parfaits aux macarons délicats...</p>
+                    <div class="card-footer">
+                        <div class="user-info">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Avatar utilisateur" class="avatar">
+                            <span class="user-name">Marie L.</span>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.8</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卡片2 -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cuisine italienne" class="card-img">
+                <div class="card-content">
+                    <span class="card-category">Cuisine italienne</span>
+                    <h3 class="card-title">Les véritables pâtes italiennes : un guide</h3>
+                    <p class="card-description">Apprenez à préparer des pâtes authentiques comme en Italie, des sauces aux techniques de cuisson...</p>
+                    <div class="card-footer">
+                        <div class="user-info">
+                            <img src="https://randomuser.me/api/portraits/men/44.jpg" alt="Avatar utilisateur" class="avatar">
+                            <span class="user-name">Luca M.</span>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.9</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 卡片3 -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cuisine asiatique" class="card-img">
+                <div class="card-content">
+                    <span class="card-category">Cuisine asiatique</span>
+                    <h3 class="card-title">Sushi à Tokyo : des échoppes aux étoiles</h3>
+                    <p class="card-description">Parcourez Tokyo à la recherche des meilleurs sushis, des stands de rue aux restaurants étoilés...</p>
+                    <div class="card-footer">
+                        <div class="user-info">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Avatar utilisateur" class="avatar">
+                            <span class="user-name">Yuki T.</span>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <span>4.7</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 选项卡切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // 移除所有active类
+                    tabs.forEach(t => t.classList.remove('active'));
+                    // 为当前选项卡添加active类
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
